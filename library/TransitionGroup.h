@@ -26,6 +26,7 @@
 #include "Precursor.h"
 #include "Product.h"
 #include "ToolsSpectrumAnalysis.h"
+#include "ToolsDeIsotoper.h"
 #include <atomic>
 
 namespace GroupDIA {

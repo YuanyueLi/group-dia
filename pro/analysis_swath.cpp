@@ -155,6 +155,8 @@ protected:
 							cur_feature_num++;
 							scan_num++;
 						}
+						if (features[cur_num].getCharge() <= 1)
+							continue;
 //						if (features[cur_num].getRT() < 2930 or features[cur_num].getRT() > 2950)
 //							continue;
 

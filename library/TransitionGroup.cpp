@@ -70,9 +70,12 @@ void TransitionGroup::set_product_ions_mz(const SwathExperiment& exp, double ms1
 	pp.pick_peak(filted_spectrum, picked_spectrum);
 	picked_spectrum.sortByPosition();
 
-	MSSpectrum<Peak1D> refined_spectrum;
-	pp.refine_peak(picked_spectrum, exp.get_para(), refined_spectrum);
-	MSSpectrum<Peak1D>& result_spectrum = refined_spectrum;
+//	MSSpectrum<Peak1D> refined_spectrum;
+//	pp.refine_peak(picked_spectrum, exp.get_para(), refined_spectrum);
+
+	MSSpectrum<Peak1D> result_spectrum;
+	ToolsDeIsotoper deiso;
+	deiso.de_isotoper(picked_spectrum, result_spectrum);
 
 	product_mz.clear();
 	for (auto it = result_spectrum.begin(); it != result_spectrum.end(); ++it) {
