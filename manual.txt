@@ -1,0 +1,59 @@
+*************** Install ***************
+The following steps has been test on Ubuntu-14.04, you can install Group-DIA as follows:
+
+1. Download and compile OpenMS 1.11.1.
+
+2. Download the source code of Group-DIA, decompress it, and then go to the Group-DIA directory:
+cd <path_to_Group-DIA>
+
+and run cmake command as follows:
+cmake . -DCMAKE_PREFIX_PATH=<path_to_OpenMS>/
+
+Suppose you have Group-DIA source files in ~/software/group-dia/, and have OpenMS installed in ~/software/OpenMS-1.11.1/, you can execute the following command:
+cd ~/software/group-dia/
+cmake . -DCMAKE_PREFIX_PATH=~/software/OpenMS-1.11.1/
+
+3. Execute the make command:
+make
+
+4. The Group-DIA programme are ready to use in the in the <path_to_Group-DIA>/bin/ folder.
+
+
+*************** Run Group-DIA ***************
+1. Edit the para file. An example of parameter file (para_expample.txt) is provided in the source code.
+	a. The 1st line is the experiment name, modify this will change the output file name.
+	b. The 2nd line is the isolation window size setting file name.
+	c. The 3rd line is the temp file directory 1. The temperate files will be put in this directory, and the temperate files in this directory will not be removed when program exited.
+	d. The 4th line is the temp file directory 2. The temperate files generated when Group-DIA will be put into this directory, and the temperate files will be removed when every program exited.
+	e. The 5th line to the end of the file is the full path of the ms1scan.mzML file. Other parts of the files should be in the same directory as the ms1scan.mzML. The file can be in mzML format, or can be compressed in .gz or .bz2 format.
+
+2. Edit the isolation window size setting file. An example of the setting file (windows.txt) is provided in the source code. For example, if you have first window like: 400 - 425 m/z, you can write the first line as 
+	400	425	2
+The 2 is the swath number of the window. 
+
+3. Alignment the retention time by run:
+./bin/normalize_rt -in ./para_expample.txt
+
+4. Analysis the DIA files by run analysis_swath, suppose you have 32 SWATH windows, you can run as follows:
+./bin/analysis_swath -in ./para_expample.txt -win 0
+./bin/analysis_swath -in ./para_expample.txt -win 1
+......
+./bin/analysis_swath -in ./para_expample.txt -win 31
+
+5. Merge the result file by run, this will generate a file named "table", the file will be used in step 7:
+./scripts/p_merge_mgf.pl ./para_expample.txt
+./scripts/p_merge_mzML.pl ./para_expample.txt
+
+6. Search database, and run PeptideProphet and iProphet.
+
+7. Fix the scan number in iProphet result file, suppose the iProphet result file name is ipro.pep.xml, run:
+./scripts/p_fix_scan_num.pl ./ipro.pep.xml table fix.ipro.pep.xml
+
+8. Rediscover the peaks by run:
+./bin/analysis_identification -in ./para_expample.txt -id ./fix.ipro.pep.xml -win 0
+./bin/analysis_identification -in ./para_expample.txt -id ./fix.ipro.pep.xml -win 1
+......
+./bin/analysis_identification -in ./para_expample.txt -id ./fix.ipro.pep.xml -win 31
+
+9. Get the final result by run:
+./bin/analysis_validate -in ./para_expample.txt

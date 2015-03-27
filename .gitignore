@@ -1,20 +1,14 @@
+################# C++ ##################3
 # Compiled Object files
 *.slo
 *.lo
 *.o
 *.obj
 
-# Precompiled Headers
-*.gch
-*.pch
-
 # Compiled Dynamic libraries
 *.so
 *.dylib
 *.dll
-
-# Fortran module files
-*.mod
 
 # Compiled Static libraries
 *.lai
@@ -26,3 +20,33 @@
 *.exe
 *.out
 *.app
+
+################## cmake ##################
+CMakeCache.txt
+CMakeFiles
+Makefile
+cmake_install.cmake
+install_manifest.txt
+
+################### R #####################
+# History files
+.Rhistory
+
+# Example code in package build process
+*-Ex.R
+
+# R data files from past sessions
+.Rdata
+
+# RStudio
+*.Rproj
+*.Rproj.user
+
+################## eclips #################
+.cproject
+.csettings
+.project
+
+#################### Linux ##################
+*~
+.Rproj.user

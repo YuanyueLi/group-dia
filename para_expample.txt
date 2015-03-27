@@ -1,0 +1,7 @@
+example
+./windows.txt
+./cache
+./cache/
+../data/split_napedro_L120229_011_SW_ms1scan.mzML
+../data/split_napedro_L120302_010_SW_ms1scan.mzML
+../data/split_napedro_L120303_010_SW_ms1scan.mzML
