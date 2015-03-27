@@ -33,11 +33,9 @@ namespace GroupDIA {
 class TransitionGroup {
 	friend class TestTransition;
 public:
-	bool set_transition(const SwathExperiment& exp, const Feature& feature, int exp_num,
-			int scan_num, int exact_scan_num);
+	bool set_transition(const SwathExperiment& exp, const Feature& feature, int exp_num, int scan_num, int exact_scan_num);
 
-	void add_ms1(const SwathExperiment& exp, const RTNormalizer& rt, int exp_num,
-			int exact_scan_num);
+	void add_ms1(const SwathExperiment& exp, const RTNormalizer& rt, int exp_num, int exact_scan_num);
 
 	void set_product_ions_mz(const SwathExperiment& exp, double ms1_win_start, double ms1_win_end);
 	void add_ms1_nearby(const SwathExperiment& exp, int exp_num, int exact_scan_num);
@@ -49,8 +47,7 @@ public:
 	void add_feature_product(const SwathExperiment& exp);
 
 	void crude_refine(double MIN_ALLOWED_CORRELATION);
-	void refined_by_crosscorrelation(int cur_exp_num, int MAX_ALLOWED_DELAY, int FINE_NEARBY,
-			double MIN_INTENSITY);
+	void refined_by_crosscorrelation(int cur_exp_num, int MAX_ALLOWED_DELAY, int FINE_NEARBY, double MIN_INTENSITY);
 
 	void remove_nearby_intensity(int exp_num);
 	void remove_feature_product();
@@ -85,13 +82,10 @@ public:
 	void get_product_mz(vector<double>& mz) const;
 	int get_product_num() const;
 
-	void get_product_intensity_in_each_time(int cur_exp_num,
-			vector<vector<double> >& intensity) const;
-	void get_product_intensity_in_each_time_nearby_version(
-			vector<vector<double> >& intensity) const;
+	void get_product_intensity_in_each_time(int cur_exp_num, vector<vector<double> >& intensity) const;
+	void get_product_intensity_in_each_time_nearby_version(vector<vector<double> >& intensity) const;
 
-	virtual bool load_store(fstream& f, int io_type, int type = LoadSave::Type::Null, int ion_num =
-			0);
+	virtual bool load_store(fstream& f, int io_type, int type = LoadSave::Type::Null, int ion_num = 0);
 
 	virtual ~TransitionGroup() {
 	}
