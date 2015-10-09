@@ -31,29 +31,19 @@ make
 	400	425	2
 The 2 is the swath number of the window. 
 
-3. Alignment the retention time by run:
-./bin/normalize_rt -in ./para_expample.txt
+3. Extract the feature using the tools FeatureFinder in OpenMS or other methods. The result features should be stored as FeatureXML file format with the same name as the MS1 file in the same folder as the MS1 file. For example, if the name of raw mzML file is abc_ms1scan.mzML.bz2, the result features file name should be abc_ms1scan.featureXML.
 
-4. Analysis the DIA files by run analysis_swath, suppose you have 32 SWATH windows, you can run as follows:
-./bin/analysis_swath -in ./para_expample.txt -win 0
-./bin/analysis_swath -in ./para_expample.txt -win 1
+4. Alignment the retention time by run, the parameter "-threads n" can be used to enable n threads to run faster:
+./bin/normalize_rt -in ./para_expample.txt -threads 8
+
+5. Analysis the DIA files by run analysis_swath, suppose you have 32 SWATH windows, you can run as follows:
+./bin/analysis_swath -in ./para_expample.txt -win 0 -threads 8
+./bin/analysis_swath -in ./para_expample.txt -win 1 -threads 8
 ......
-./bin/analysis_swath -in ./para_expample.txt -win 31
+./bin/analysis_swath -in ./para_expample.txt -win 31 -threads 8
 
-5. Merge the result file by run, this will generate a file named "table", the file will be used in step 7:
-./scripts/p_merge_mgf.pl ./para_expample.txt
-./scripts/p_merge_mzML.pl ./para_expample.txt
+6. Merge the result file by run, this will generate a file named "table", the file will be used in step 7:
+./scripts/p_merge_mgf.pl ./para_expample.txt -threads 8
+./scripts/p_merge_mzML.pl ./para_expample.txt -threads 8
 
-6. Search database, and run PeptideProphet and iProphet.
-
-7. Fix the scan number in iProphet result file, suppose the iProphet result file name is ipro.pep.xml, run:
-./scripts/p_fix_scan_num.pl ./ipro.pep.xml table fix.ipro.pep.xml
-
-8. Rediscover the peaks by run:
-./bin/analysis_identification -in ./para_expample.txt -id ./fix.ipro.pep.xml -win 0
-./bin/analysis_identification -in ./para_expample.txt -id ./fix.ipro.pep.xml -win 1
-......
-./bin/analysis_identification -in ./para_expample.txt -id ./fix.ipro.pep.xml -win 31
-
-9. Get the final result by run:
-./bin/analysis_validate -in ./para_expample.txt
+7. Search database, and run PeptideProphet and iProphet.
